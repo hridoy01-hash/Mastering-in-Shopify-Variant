@@ -1,0 +1,134 @@
+<section style="margin-top:25px">
+  <div class="container">
+    <div class="row">
+      {% capture display_img %}
+      <div class="col-md-6">
+        {% if section.settings.display_img != null %}
+          <img src="{{ section.settings.display_img | img_url:'original' }}" class="w-100" alt="Disply Image">
+        {% else %}
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}
+      </div>
+      {% endcapture %}
+
+      {% if section.settings.image_alignment == 'left' %}
+        {{ display_img }}
+      {% endif %}
+
+      <div class="col-md-6 content_alignment">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'title' %}
+              <p class="">{{ block.settings.title }}</p>
+            {% when 'description' %}
+              <p class="">{{ block.settings.description }}</p>
+            {% when 'action' %}
+              <a href="{{ block.settings.btn_url }}"
+                ><button class="btn btn-primary">{{ block.settings.btn_label }}</button></a
+              >
+          {% endcase %}
+        {% endfor %}
+      </div>
+      {% if section.settings.image_alignment == 'right' %}
+        {{ display_img }}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Image with test",
+  "settings":[
+    {
+      "type":"image_picker",
+      "id":"display_img",
+      "label":"Upolad a display Image"
+    },
+    {
+      "type":"header",
+      "content":"Setting"
+    },
+    {
+
+  "type": "select",
+  "id": "image_alignment",
+  "label": "Image Alignment",
+  "default":"left",
+  "options": [
+    {
+      "value": "left",
+      "label": "Left"
+    },
+    {
+      "value": "right",
+      "label": "Right"
+    }
+  ]
+}
+
+
+  ],
+  "blocks":[
+    {
+      "type":"title",
+      "name":"title",
+      "settings":[
+        {
+          "type":"text",
+          "id":"title",
+          "label":"Title",
+          "default":"This is title"
+        }
+      ]
+    },
+     {
+      "type":"description",
+      "name":"Description",
+      "settings":[
+        {
+          "type":"richtext",
+          "id":"description",
+          "label":"Description",
+          "default":"<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>"
+        }
+      ]
+    },
+    {
+      "type":"action",
+      "name":"Action",
+      "settings":[
+        {
+          "type":"text",
+          "id":"btn_label",
+          "label":"Button Label",
+          "default":"Shop Now"
+        },
+        {
+          "type":"url",
+          "id":"btn_url",
+          "label":"Button URL"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Image With text",
+      "category":"Image",
+      "blocks":[
+        {
+          "type":"title"
+        },
+        {
+          "type":"description"
+        },
+        {
+          "type":"action"
+        }
+      ]
+    }
+
+  ]
+}
+{% endschema %}

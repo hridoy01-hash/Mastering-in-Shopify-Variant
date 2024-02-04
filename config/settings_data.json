@@ -1,0 +1,240 @@
+{
+  "current": {
+    "sections": {
+      "collection-list": {
+        "type": "collection-list",
+        "blocks": {
+          "collection-list-0": {
+            "type": "collection",
+            "settings": {
+            }
+          },
+          "collection-list-1": {
+            "type": "collection",
+            "settings": {
+            }
+          },
+          "collection-list-2": {
+            "type": "collection",
+            "settings": {
+            }
+          }
+        },
+        "block_order": [
+          "collection-list-0",
+          "collection-list-1",
+          "collection-list-2"
+        ],
+        "settings": {
+        }
+      },
+      "featured-collection": {
+        "type": "featured-collection",
+        "settings": {
+          "collection_title": "Featured Colection",
+          "featured_collection": "",
+          "show_limit_product": 4
+        }
+      },
+      "featured-product": {
+        "type": "featured-product",
+        "settings": {
+          "product": ""
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu",
+          "show_search_box": true
+        }
+      },
+      "new_footer": {
+        "type": "new_footer",
+        "blocks": {
+          "fb9a6495-8a60-4f41-a21a-7fbdd588caa8": {
+            "type": "info",
+            "settings": {
+              "info_title": "info Title",
+              "rich_text_info": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the<\/p>"
+            }
+          },
+          "bb0a1e38-aaa2-4c1b-9c72-a211ae2b80f4": {
+            "type": "menu",
+            "settings": {
+              "menu_title": "Menu Title",
+              "menu_list": "footer"
+            }
+          },
+          "0609b85f-cee0-4366-822f-5dc74f1b7846": {
+            "type": "menu",
+            "settings": {
+              "menu_title": "Useful Link",
+              "menu_list": "footer"
+            }
+          },
+          "6c5a7784-c419-421f-99c8-ac43dbda54e6": {
+            "type": "image",
+            "settings": {
+              "footer_img": "shopify:\/\/shop_images\/potted-seeds_925x_33d774ef-9845-4b94-85cb-0aad17cbaca7.jpg",
+              "url": ""
+            }
+          }
+        },
+        "block_order": [
+          "fb9a6495-8a60-4f41-a21a-7fbdd588caa8",
+          "bb0a1e38-aaa2-4c1b-9c72-a211ae2b80f4",
+          "0609b85f-cee0-4366-822f-5dc74f1b7846",
+          "6c5a7784-c419-421f-99c8-ac43dbda54e6"
+        ],
+        "settings": {
+          "copy_right_text": "@2023 All rights reserved by Soppiya Innovation Ltd.",
+          "background_color": "#e43838"
+        }
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "product_per_page_show": 6,
+          "numbre_of_col": 4,
+          "enable_vendor_name": true
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "blocks": {
+          "567b8d71-a988-4b8b-9a51-a91f5e6c91a5": {
+            "type": "title",
+            "settings": {
+            }
+          },
+          "product-template-1": {
+            "type": "vendor",
+            "settings": {
+            }
+          },
+          "product-template-2": {
+            "type": "description",
+            "settings": {
+            }
+          },
+          "product-template-3": {
+            "type": "price",
+            "settings": {
+            }
+          },
+          "product-template-4": {
+            "type": "quantity",
+            "settings": {
+            }
+          },
+          "product-template-5": {
+            "type": "variant",
+            "settings": {
+            }
+          },
+          "product-template-6": {
+            "type": "AddToCart",
+            "settings": {
+            }
+          }
+        },
+        "block_order": [
+          "567b8d71-a988-4b8b-9a51-a91f5e6c91a5",
+          "product-template-1",
+          "product-template-2",
+          "product-template-3",
+          "product-template-4",
+          "product-template-5",
+          "product-template-6"
+        ],
+        "settings": {
+        }
+      },
+      "image-with-text": {
+        "type": "image-with-text",
+        "blocks": {
+          "e8c29846-ad5d-43f1-9414-767a01c833f8": {
+            "type": "title",
+            "settings": {
+              "title": "This is title"
+            }
+          },
+          "26c5d5d7-641d-4bf0-8216-7bca93e75d7f": {
+            "type": "description",
+            "settings": {
+              "description": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text<\/p>"
+            }
+          },
+          "871a5cf3-504a-48a4-b2d8-c2afaa13089c": {
+            "type": "action",
+            "settings": {
+              "btn_label": "Shop Now",
+              "btn_url": ""
+            }
+          }
+        },
+        "block_order": [
+          "e8c29846-ad5d-43f1-9414-767a01c833f8",
+          "26c5d5d7-641d-4bf0-8216-7bca93e75d7f",
+          "871a5cf3-504a-48a4-b2d8-c2afaa13089c"
+        ],
+        "settings": {
+          "image_alignment": "left"
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  },
+  "presets": {
+    "Default": {
+      "sections": {
+        "collection-list": {
+          "type": "collection-list",
+          "blocks": {
+            "collection-list-0": {
+              "type": "collection",
+              "settings": {
+              }
+            },
+            "collection-list-1": {
+              "type": "collection",
+              "settings": {
+              }
+            },
+            "collection-list-2": {
+              "type": "collection",
+              "settings": {
+              }
+            }
+          },
+          "block_order": [
+            "collection-list-0",
+            "collection-list-1",
+            "collection-list-2"
+          ],
+          "settings": {
+          }
+        },
+        "featured-collection": {
+          "type": "featured-collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "featured-product": {
+          "type": "featured-product",
+          "settings": {
+          }
+        }
+      },
+      "content_for_index": [
+        "collection-list",
+        "featured-collection",
+        "featured-product"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<div class="{{ column | default: 'col-md-4' }}">
+  <div class="card">
+    <img
+      src="{{ product.featured_image | img_url:'original' }}"
+      class="card-img-top"
+      alt="{{ product.title }}"
+    >
+    <div class="card-body">
+      <h4 class="card-title">{{ product.title }}</h4>
+      {% if enable_vendor_name %}
+        <p class="vendor-name text-uppercase">{{ product.vendor }}</p>
+      {% endif %}
+      {% render 'price-show', product: product %}
+
+      <a href="{{ product.url }}" class="btn btn-primary w-100">View Product Details</a>
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <input class="my-3 w-100" min="1" type="number" id="quantity" name="quantity" value="1">
+        <input type="submit" value="Add to cart" class="btn btn-primary">
+      </form>
+    </div>
+  </div>
+</div>

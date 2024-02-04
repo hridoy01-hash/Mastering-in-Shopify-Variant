@@ -1,0 +1,133 @@
+{% liquid
+  assign product = all_products[section.settings.product]
+%}
+
+<div class="container">
+  {% if product != blank %}
+    <div class="card">
+      <div class="container-fliud">
+        <div class="wrapper row">
+          <div class="preview col-md-6">
+            <div class="preview-pic tab-content">
+              <div class="tab-pane active" id="pic-1">
+                <img src="{{ product.featured_image | img_url:'original' }}" alt="{{ product.title }}">
+              </div>
+            </div>
+          </div>
+          <div class="details col-md-6">
+            {% form 'product', product %}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              {% for block in section.blocks %}
+                {% case block.type %}
+                  {% when 'title' %}
+                    <h3 class="product-title">{{ product.title }}</h3>
+                  {% when 'price' %}
+                    <h4 class="price">
+                      current price: <span>{{ product.price | money }}</span>
+                    </h4>
+                  {% when 'description' %}
+                    <p class="product-description">
+                      {% if product.description != blank %}
+                        {{ product.description }}
+                      {% else %}
+                        <p>product description is not found</p>
+                      {% endif %}
+                    </p>
+                  {% when 'variants' %}
+                    <div class="product_variants" style="margin-top:15px">
+                      <select class="form-control" name="id">
+                        {% for variant in product.variants %}
+                          <option value="{{ variant.id }}">{{ variant.title }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  {% when 'quantity' %}
+                    <div class="quantity_slector my-15 ">
+                      <label>Quantity:</label>
+                      <input type="number" class="form-control" name="quantity" value="1" min="1">
+                    </div>
+                  {% when 'addToCart' %}
+                    <div class="actions" style="margin-top:15px">
+                      <button class=" btn btn-primary" type="submit" name="add">Add to cart</button>
+                    </div>
+                {% endcase %}
+              {% endfor %}
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div>
+      <h4 class="text-center">Please,Select a Product</h4>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Featured Product",
+  "settings": [
+    {
+      "type":"product",
+      "id":"product",
+      "label":"Select Product"
+    }
+  ],
+  "blocks":[
+    {
+      "type":"title",
+      "name":"Product title",
+      "limit":1
+    },
+    {
+      "type":"price",
+      "name":"Product price",
+      "limit":1
+    },
+    {
+      "type":"description",
+      "name":"Product description",
+      "limit":1
+    },
+     {
+      "type":"variants",
+      "name":"Product variants",
+      "limit":1
+    },
+    {
+      "type":"quantity",
+      "name":"Product quantity",
+      "limit":1
+    },
+    {
+      "type":"addToCart",
+      "name":"Add to cart button",
+      "limit":1
+    }
+  ],
+  "presets":[
+    {
+      "name":"Featured Product",
+      "category":"Product",
+      "blocks":[
+        {
+          "type":"title"
+        },
+        {
+          "type":"price"
+        },
+        {
+          "type":"quantity"
+        },
+        {
+          "type":"variants"
+        },
+        {
+          "type":"addToCart"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

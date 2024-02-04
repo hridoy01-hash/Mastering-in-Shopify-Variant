@@ -1,0 +1,115 @@
+{% liquid
+
+%}
+{% stylesheet %}
+  #section_bg_{{ section.id }}{
+    background-color:{{section.settings.BackgroundColor}};
+  }
+{% endstylesheet %}
+
+<div class="container" id="section_bg_{{ section.id }}">
+  <div class="row d-flex justify-content-center align-items-center rows">
+    <div class="card_container">
+      <div class="card">
+        <div class="text-center">
+          {% if section.settings.promotion_img != null %}
+            <img src="{{ section.settings.promotion_img | img_url:'original' }}" width="200" alt="promotion image">
+          {% endif %}
+
+          {% for block in section.blocks %}
+            <p class="text-center" id="title_text_color_{{ section.id }}" style="margin-top:15px">
+              {{ block.settings.title_text }}
+            </p>
+
+            <span class="d-block mt-3">{{ block.settings.message_text }}</span>
+          {% endfor %}
+
+          <div class="mx-5">
+            {% form ''customer', class:'newsletter_form' %}
+              <div class="input-group mb-3 mt-4">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter email"
+                  aria-label="Recipient's username"
+                  aria-describedby="button-addon2"
+                  name="contact[email]"
+                >
+                <button class="btn btn-success border-rad" type="submit" id="button-addon2">Subscribe</button>
+              </div>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name":"News Letter Subscription",
+  "settings":[
+    {
+      "type":"image_picker",
+      "id":"promotion_img",
+      "label":"Upload a promoton offer image"
+    },
+    {
+      "type":"header",
+      "content":"Title Text Color"
+    },
+    {
+      "type": "color_background",
+      "id": "BackgroundColor",
+      "label": "Section Backgound Color",
+      "default": "#000000"
+    }
+
+  ],
+  "blocks":[
+    {
+      "type":"message",
+      "name":"email_text_description",
+      "limit":1,
+      "settings":[
+        {
+          "type":"richtext",
+          "id":"message_text",
+          "label":"Write something for your customer",
+          "default":"<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</p>"
+
+        }
+      ]
+    },
+    {
+      "type":"title",
+      "name":"title",
+      "limit":1,
+      "settings":[
+        {
+          "type":"text",
+          "id":"title_text",
+          "label":"title text write",
+          "default":"Title Here"
+
+        }
+      ]
+    }
+
+  ],
+  "presets":[
+    {
+      "name":"News Letter Subscription",
+      "category":"Email",
+      "blocks":[
+        {
+          "type":"message"
+        },
+        {
+          "type":"title"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

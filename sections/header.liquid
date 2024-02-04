@@ -1,0 +1,127 @@
+{{ section.settings.name }}
+
+{% liquid
+  assign brand_logo = section.settings.logo
+  assign menuItem = section.settings.menu
+  assign activeSearchbar = section.settings.show_search_box
+%}
+
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      {% if brand_logo != null %}
+        <img src="{{ brand_logo |img_url:width:200 }}" alt="{{ shop.name }}">
+      {% else %}
+        <a class="navbar-brand" href="#">{{ shop.name }}</a>
+      {% endif %}
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% for link in menuItem.links %}
+            <li class="nav-item {% if link.links.size >0 %}dropdown{% endif %}">
+              <a
+                class="nav-link {% if link.links.size >0 %}dropdown-toggle{% endif %}"
+                {% if link.links.size > 0 %}
+                  href="#"
+                  id="navbarDropdown_{{ forloop.index }}"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                {% endif %}
+                aria-current="page"
+                href="{{ link.url }}"
+              >
+                {{- link.title -}}
+              </a>
+
+              {% if link.links.size > 0 %}
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% for dropLink in link.links %}
+                    <li>
+                      <a class="dropdown-item" href="{{ dropLink.url }}">{{ dropLink.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% if activeSearchbar %}
+          <form class="d-flex" action="{{ routes.search_url }}">
+            <input
+              class="form-control me-2"
+              type="text"
+              name="q"
+              placeholder="Search"
+              aria-label="Search"
+              value="{{ search.terms | escape }}"
+            >
+            <button class="btn btn-outline-success" type="submit">Find Product</button>
+          </form>
+        {% endif %}
+        <div class="cart-counter mx-3">
+          <a href="{{ routes.cart_url }}">
+            {% if cart.item_count > 0 %}
+              {% render 'icon-folder', icons: 'cart-full' -%}
+            {% else %}
+              {% render 'icon-folder', icons: 'cart-empty' -%}
+            {% endif %}
+            {{- cart.item_count -}}
+          </a>
+        </div>
+        {% if shop.customer_accounts_enabled %}
+          <div class="account_wrapper">
+            {% if customer %}
+              <a href="{{ routes.account_url }}">User Profile</a>
+            {% else %}
+              <a href="{{ routes.account_login_url }}">Login</a>
+            {% endif %}
+          </div>
+          
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings":[
+    {
+  "type": "image_picker",
+  "id": "logo",
+  "label": "Select Your Shop Logo",
+  "info":"Recommended Size 200*200px"
+   },
+   {
+  "type": "link_list",
+  "id": "menu",
+  "label": "Menu"
+   },
+    {
+      "type": "header",
+      "content": "Search Bar"
+    },
+    {
+      "type" : "checkbox",
+      "id" : "show_search_box",
+      "label": "Enable Search Bar",
+      "default": true
+    }
+
+
+  ]
+}
+{% endschema %}

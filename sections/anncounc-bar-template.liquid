@@ -1,0 +1,29 @@
+<marquee class="html-marquee" direction="left" behavior="scroll" scrollamount="12">
+  {% for singleAnnounce in section.blocks %}
+    <p>{{ singleAnnounce.settings['accounce-text'] }}</p>
+  {% endfor %}
+</marquee>
+{% schema %}
+{
+  "name": "Accouncebar",
+  "settings": [],
+  "blocks":[{
+    "type":"accouncebar",
+    "name":"Add Accounce text",
+    "settings":[
+      {
+        "type":"text",
+        "id":"accounce-text",
+        "label":"Add Announcebar text",
+        "default":"This is Dami text"
+      }
+    ]
+  }]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

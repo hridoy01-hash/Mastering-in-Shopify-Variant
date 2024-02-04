@@ -1,0 +1,16 @@
+{
+  "type": "header",
+  "name": "Header Section",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search_box": true
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

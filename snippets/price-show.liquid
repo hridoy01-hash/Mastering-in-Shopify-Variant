@@ -1,0 +1,28 @@
+<div class="product-price">
+  {% if product.compare_at_price > product.price %}
+    {% if product.price_varies %}
+      <span class="card-title"
+        >From {{ product.price_min }}
+        {{ shop.currency }} - {{ product.price_max }}
+        {{ shop.currency }}
+      </span>
+    {% else %}
+      <span class="card-title">{{ product.price | money }} - </span>
+      <span class="card-title main_price">
+        {{- product.compare_at_price }}
+        {{ shop.currency -}}
+      </span>
+    {% endif %}
+  {% else %}
+    {% if product.price_varies %}
+      <span class="card-title"
+        >From {{ product.price_min }}
+        {{ shop.currency }} - {{ product.price_max }}
+        {{ shop.currency }}
+      </span>
+    {% else -%}
+      }
+      <h5 class="card-title">{{ product.price | money }}</h5>
+    {% endif %}
+  {% endif %}
+</div>

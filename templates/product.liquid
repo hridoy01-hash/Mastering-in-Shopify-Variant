@@ -1,0 +1,150 @@
+<style>
+  body {
+    font-family: 'Poppins';
+  }
+  /* Hide the default radio button */
+  .product_variant_wrapper input[type='radio'] {
+    display: none;
+  }
+
+  /* Style the custom button-like radio button */
+  .custom-radio-button {
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: #fff;
+    color: #616161;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid #ebebeb;
+  }
+
+  /* Style for when the radio button is checked */
+  .product_variant_wrapper input[type='radio']:checked + .custom-radio-button {
+    background-color: #121212;
+    color: #fff;
+  }
+
+  .product_variant_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+</style>
+
+<div class="container">
+  <div class="product_main_wrapper pt-5">
+    <div class="row product_inner_content">
+      <div class=" col-md-6 product_image">
+        <div class="display_image_wrapper">
+          <img
+            src="{{ product.featured_image |  img_url: 'master'}}"
+            alt="{{ product.title }}"
+            width="100%"
+            height="auto"
+          >
+          <div class="galery_img">
+            <ul style="padding-left: 0px; display:flex; flex-wrap:wrap;list-style:none;gap:15px;padding-top:10px">
+              {% for image in product.images %}
+                <li>
+                  <img src="{{ image |  img_url: 'medium' }}" alt="{{ product.title }}" width="150px" height="200px">
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class=" col-md-6 product_text_content">
+        <h2 style="font-weight: 700;">{{ product.title }}</h2>
+        <span>{{ product.vendor }}</span>
+
+        <div class="product_price_wrappper mt-2">
+          <h4 class="product_compare_price text-decoration-line-through">
+            {{ product.selected_or_first_available_variant.compare_at_price | money }}
+          </h4>
+          <h4 class="product_price">{{ product.selected_or_first_available_variant.price | money }}</h4>
+        </div>
+
+        <p>{{ product.description }}</p>
+
+        {% form 'product', product %}
+          <input
+            id="product_variant_id"
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+          >
+          <div class="product_variant_wrapper">
+            <h5>Product Variants</h5>
+            {% for option in product.options_with_values %}
+              <fieldset>
+                <legend>{{ option.name }}</legend>
+                {% for value in option.values %}
+                  <input
+                    {% if option.selected_value == value %}
+                      checked
+                    {% endif %}
+                    type="radio"
+                    id="{{ option.name |  handleize }}-{{ value }}"
+                    name="{{ option.name }}"
+                    value="{{ value }}"
+                    hidden
+                  >
+                  <label for="{{ option.name |  handleize }}-{{ value }}" class="custom-radio-button">
+                    {{- value -}}
+                  </label>
+                {% endfor %}
+              </fieldset>
+            {% endfor %}
+          </div>
+
+          <div class="mt-4">
+            <input class="text-center" type="number" name="quantity" id="quantity" min="1" value="1">
+            <input type="submit" value="Add to cart">
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+   const product = {{ product |  json }}
+  document.querySelectorAll('.product_variant_wrapper input[type="radio"]').forEach((radioButton) => {
+      radioButton.addEventListener("click", function() {
+
+          // empty array for selected option
+          const selectedOptions = [];
+          document.querySelectorAll('.product_variant_wrapper input[type="radio"]:checked').forEach((radioValue) => {
+              selectedOptions.push(radioValue.value);
+          });
+
+          let matchedVariants = product.variants.find(variant =>{
+            let pass = true;
+            for(let i=0; i< selectedOptions.length;i++){
+              if(selectedOptions.indexOf(variant.options[i]) === -1){
+                pass = false
+                break;
+              }
+            }
+            return pass;
+          });
+
+          console.log("matchedVariants" , matchedVariants);
+
+          // update product variant ID
+        document.getElementById("product_variant_id").value = matchedVariants.id;
+
+        // update variant URL
+        let URL = new URLParse(window.location.href , true);
+        URL.query.variant = matchedVariants.id;
+        window.history.replaceState(null,null,URL);
+
+        // update price
+        document.querySelector(".product_compare_price").textContent = formatMoney(matchedVariants.compare_at_price,"{{ shop.money_format }}");
+        document.querySelector(".product_price").textContent = formatMoney(matchedVariants.price,"{{ shop.money_format }}");
+
+
+      });
+  });
+</script>

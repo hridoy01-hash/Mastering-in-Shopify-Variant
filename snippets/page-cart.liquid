@@ -1,0 +1,15 @@
+<div class="{{ column | default: 'col-md-4' }}">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">{{ page.title }}</h4>
+      {% if page.author %}
+        <p class="vendor-name text-uppercase">{{ page.author }}</p>
+      {% endif %}
+      <span>{{ page.published_at }}</span>
+      {% if page.content %}
+        <p>{{ page.content }}</p>
+      {% endif %}
+      <a href="{{ page.url }}" class="btn btn-primary w-100">Details</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+{% liquid
+  assign collections = section.settings.collection
+%}
+
+{% for product in collections.products %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card" style="width: 18rem;">
+          <img src="{{ product.featured_image | img_url:'original' }}" class="card-img-top" alt="{{ product.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">
+              {{ product.description }}
+            </p>
+            <p class="card-text">
+              {{ product.price | money }}
+            </p>
+            <a href="#" class="btn btn-primary">Add to cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+{% schema %}
+{
+  "name" : "Featured Collection",
+  "settings":[
+    {
+      "type":"collection",
+      "id":"collection",
+      "label":"select a collection"
+    }
+  ],
+  "presets":[
+    {
+      "name":"featured Collection Pratice",
+      "category":"Featured Collection"
+    }
+  ]
+}
+{% endschema %}

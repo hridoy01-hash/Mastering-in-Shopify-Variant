@@ -1,0 +1,16 @@
+<div class="{{ column | default: 'col-md-4' }}">
+  <div class="card">
+    <img
+      src="{{ article.image | img_url:'original' }}"
+      class="card-img-top"
+      alt="{{ article.title }}"
+    >
+    <div class="card-body">
+      <h4 class="card-title">{{ article.title }}</h4>
+      {% if article.author %}
+        <p class="vendor-name text-uppercase">{{ article.author }}</p>
+      {% endif %}
+      <p>{{ article.content }}</p>
+    </div>
+  </div>
+</div>

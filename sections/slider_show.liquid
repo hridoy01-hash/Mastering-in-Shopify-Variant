@@ -1,0 +1,137 @@
+{% liquid 
+
+%}
+
+<div
+  id="carouselExampleCaptions"
+  class="carousel slide"
+  data-bs-ride="carousel"
+  data-bs-interval="{{ section.settings.enable_auto_slide }}"
+>
+  <div class="carousel-indicators">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="{{ forloop.index0 }}"
+          {% if forloop.index == 1 %}
+            class="active"
+            aria-current="true"
+            aria-label="Slide {{ forloop.index }}"
+          {% else %}
+            aria-current="false"
+            aria-label="Slide {{ forloop.index }}"
+          {% endif %}
+        ></button>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class="carousel-inner">
+    {% for block in section.blocks %}
+      <div class="carousel-item {% if forloop.index == 1 %}active{% endif %}" data-bs-interval="3000">
+        {% if block.settings.sliderimg != null %}
+          <img
+            src="{{ block.settings.sliderimg | img_url:'original'}}"
+            class="d-block w-100"
+            alt="{{ block.settings.sliderimg.alt | escape }}"
+            style="height: 650px;width:100%"
+          >
+        {% endif %}
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ block.settings.title | escape }}</h5>
+          <div class="slider_sub_text">
+            {{ block.settings.slider_sub_text }}
+          </div>
+          {% if block.settings.button_label != blank %}
+            <div class="actions slider_btn_wrapper">
+              <a href="{{ block.settings.button_url }}" class="btn btn-primary text-center">
+                {{ block.settings.button_label | escape }}
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% if section.blocks.size > 1 and section.settings.Show_Previous_icon %}
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name":"Slider Show",
+  "settings":[
+    {
+      "type": "checkbox",
+      "id":"enable_auto_slide",
+      "label":"Enable auto Slide",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id":"Show_Previous_icon",
+      "label":"Show slide change icon",
+      "default": true
+    }
+  ],
+  "blocks":[
+    {
+      "name":"slider",
+      "type":"slide",
+      "settings":[
+        {
+          "type":"image_picker",
+          "id":"sliderimg",
+          "label":"Upload a slider image"
+        },
+        {
+          "type":"header",
+          "content":"Slider Text Content"
+        },
+        {
+          "type": "text",
+          "id" :"title",
+          "label": "Title",
+          "default": "Summer Sale"
+        },
+        {
+          "type": "richtext",
+          "id": "slider_sub_text",
+          "label": "Slider Sub Text Field",
+          "default": "<p>Some representative placeholder content for the first slide.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button Link"
+        },
+        {
+          "type":"header",
+          "content":"Slide Change Control"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Slider show",
+      "category": "Show Slider"
+    }
+  ]
+}
+{% endschema %}

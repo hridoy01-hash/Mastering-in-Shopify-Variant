@@ -1,0 +1,151 @@
+{% liquid
+  case section.blocks.size
+    when 1
+      assign column = 'col-lg-12 col-md-12 col-md-12'
+    when 2
+      assign column = 'col-lg-6 col-md-6 col-md-12'
+    when 3
+      assign column = 'col-lg-4 col-md-4 col-md-6'
+    when 4
+      assign column = 'col-lg-3 col-md-3 col-md-6'
+    else
+      assign column = 'col-12'
+  endcase
+%}
+
+{% stylesheet %}
+  .footer-section.footer{
+    background-color: {{ section.settings.background_color }};
+  }
+{% endstylesheet %}
+
+<footer class="footer-section mt-5" id="footer-{{ section.id }}">
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'menu' %}
+              <div class="{{ column }}">
+                <h4>{{ block.settings.menu_title }}</h4>
+
+                <div>
+                  <ul>
+                    {% for link in block.settings.menu_list.links %}
+                      <li>
+                        <a href="{{ link.url }}">{{ link.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            {% when 'info' %}
+              <div class="{{ column }}">
+                <h4>{{ block.settings.info_title }}</h4>
+                <div class="footer-info">
+                  {{ block.settings.rich_text_info }}
+                </div>
+              </div>
+            {% when 'image' %}
+              <div class="{{ column }}">
+                <a href="{{ block.settings.url }}">
+                  <img src="{{ block.settings.footer_img | img_url:'original' }}" width:200px>
+                </a>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <p class="text-center mt-5">{{ section.settings.copy_right_text }}</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+    "name": "Footer",
+    "disabled_on": {
+    "templates": ["product"],
+    "groups": ["header"]
+  },
+    "settings": [
+        {
+            "type": "text",
+            "id": "copy_right_text",
+            "label": "Copy Rights Text Content",
+            "default": "Your Copy Rights Conent goes here..."
+        },
+        {
+            "type": "header",
+            "content": "Footer settings"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "background Color",
+            "default": "#FFFFFF"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "menu",
+            "name": "Footer Menu",
+            "limit": 4,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "menu_title",
+                    "label": "Menu Title",
+                    "default": "Menu Title"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu_list",
+                    "label": "Footer Menu"
+                }
+            ]
+        },
+        {
+            "type": "info",
+            "name": "info",
+            "limit": 2,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "info_title",
+                    "label": "info Title",
+                    "default": "info Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "rich_text_info",
+                    "label": "Info",
+                    "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the</p>"
+                }
+            ]
+        },
+        {
+            "type": "image",
+            "name": "image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "footer_img",
+                    "label": "Footer Image"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Footer",
+            "category": "Footer"
+        }
+    ]
+}
+{% endschema %}

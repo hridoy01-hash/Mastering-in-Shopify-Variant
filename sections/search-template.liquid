@@ -1,0 +1,43 @@
+<div class="search_seaction_{{ section.id }}">
+  <div class="search_header container">
+    <div class="jumbotron jumbotron-fluid search_heading_section">
+      <h2 class="search_heading text-center">Search Page</h2>
+      <div class="search_page_form w-70 d-flex align-item-center">
+        <form class="d-flex" action="{{ routes.search_url }}">
+          <input
+            class="form-control me-2"
+            type="text"
+            name="q"
+            placeholder="Search"
+            aria-label="Search"
+            value="{{ search.terms | escape }}"
+          >
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="search_result">
+      <div class="row">
+        {% for item in search.results %}
+          {% case item.object_type %}
+            {% when 'product' %}
+              {% render 'product-cart', product: item %}
+            {% when 'article' %}
+              {% render 'article-cart', article: item %}
+            {% when 'page' %}
+              {% render 'page-cart', page: item %}
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Search Template",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,52 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "new_footer",
+      "blocks": {
+        "2c463778-f018-4dd0-958f-ce288b469a1b": {
+          "type": "menu",
+          "settings": {
+            "menu_title": "Menu Title",
+            "menu_list": "footer"
+          }
+        },
+        "5d7af750-0c0e-4d81-b24d-7d7c82355985": {
+          "type": "info",
+          "settings": {
+            "info_title": "info Title",
+            "rich_text_info": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the<\/p>"
+          }
+        },
+        "57b654e9-f455-4db6-86f2-a9d7f8a56033": {
+          "type": "menu",
+          "settings": {
+            "menu_title": "Menu Title",
+            "menu_list": "main-menu"
+          }
+        },
+        "34650e30-f8fc-4df9-817e-a99e64d67512": {
+          "type": "image",
+          "settings": {
+            "footer_img": "shopify:\/\/shop_images\/Clothes-Trends-Web-1.jpg",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "2c463778-f018-4dd0-958f-ce288b469a1b",
+        "5d7af750-0c0e-4d81-b24d-7d7c82355985",
+        "57b654e9-f455-4db6-86f2-a9d7f8a56033",
+        "34650e30-f8fc-4df9-817e-a99e64d67512"
+      ],
+      "settings": {
+        "copy_right_text": "Your Copy Rights Conent goes here...",
+        "background_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

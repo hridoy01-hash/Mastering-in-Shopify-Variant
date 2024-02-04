@@ -1,0 +1,70 @@
+{% liquid
+  assign collections = section.settings.featured_collection
+%}
+{% stylesheet %}
+  #title_text_{{ section.id }}{
+    color: {{ section.settings.textColor }};
+  }
+{% endstylesheet %}
+<div class="container">
+  <div class="section_title text-center">
+    <h3 class="pt-20 featured_heading" id="title_text_{{ section.id }}">{{ section.settings.collection_title }}</h3>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for product in collections.products limit: section.settings.show_limit_product %}
+      {% render 'product-cart', product: product %}
+    {% endfor %}
+  </div>
+  {% if collections.all_products_count.size > 6 %}
+    <div class="text-center view_more_btn_wrapper mt-3">
+      <a href="{{ collections.url }}" class="text-center btn btn-primary"
+        >View More {{ collections.all_products_count -}}
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name":"Featured Collection",
+  "settings":[
+    {
+      "type":"text",
+      "id":"collection_title",
+      "label":"Featured Collection title",
+      "default":"Featured Colection"
+    },
+    {
+    "type":"collection",
+    "id":"featured_collection",
+    "label":"Select Featured Collection"
+    },
+    {
+    "type":"range",
+      "min":2,
+      "max":8,
+      "step":2,
+      "id":"show_limit_product",
+      "label":"Products Show Quantity",
+      "default":4
+    },
+    {
+      "type":"header",
+      "content":"Section title color"
+    },
+    {
+      "type":"color",
+      "id":"textColor",
+      "label":"Background",
+      "default":"#000000"
+    }
+
+  ],
+  "presets":[
+    {
+      "name":"Featured Collection",
+      "category":"Collection"
+    }
+  ]
+}
+{% endschema %}

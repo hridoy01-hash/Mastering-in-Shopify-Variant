@@ -1,0 +1,162 @@
+<div class="cart-page" id="{{ section.id }}">
+  <div class="cart-heading bg-dark p-4 mb-4">
+    <div class="header d-flex align-items-center justify-content-center">
+      <h3 class="text-light">Your Cart</h3>
+    </div>
+  </div>
+  <div class="container">
+    {% unless cart.empty? %}
+      <form action="{{ routes.cart_url }}" method="post" id="cart">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="cart-table">
+              <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Final Price</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for lineItem in cart.items %}
+                    <tr>
+                      <td>
+                        <div class="item-content d-flex">
+                          <div class="item-img">
+                            {% if lineItem.image != empty %}
+                              <img src="{{ lineItem.image | img_url:width:300 }}" width="100" height="auto">
+                            {% endif %}
+                          </div>
+                          <div class="content">
+                            <p style="margin-bottom: 0 !important;" class="title">
+                              {{ lineItem.product.title | escape | link_to: lineItem.url }}
+                            </p>
+                            <div class="price_">
+                              <span>Price: {{ lineItem.original_price -}}</span>
+                            </div>
+                            {% if lineItem.product.has_only_default_variant == false
+                              or lineItem.properties.size != 0
+                              or lineItem.selling_plan_allocation != null
+                            %}
+                              {% if lineItem.product.has_only_default_variant == false %}
+                                <div class="item_options">
+                                  {% for option in lineItem.options_with_values %}
+                                    <span>{{ option.name | escape }}: {{ option.value }}</span> <br>
+                                  {% endfor %}
+                                </div>
+                              {% endif %}
+                              {% if lineItem.selling_plan_allocation != null %}
+                                <div class="selling_plan">
+                                  <span>Selling Plan : {{ lineItem.selling_plan_allocation }}</span>
+                                </div>
+                              {% endif %}
+                            {% endif %}
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="price_wrapper">
+                          {% if lineItem.original_line_price != lineItem.final_price %}
+                            <del>{{ lineItem.original_price | money }}</del> <br>
+                            <span class="selling_price">{{ lineItem.final_price | money }}</span>
+                          {% else %}
+                            <span class="original_price">{{ lineItem.original_price | money }}</span>
+                          {% endif %}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="quantity_wrapper">
+                          <div class="input-group mb-3" style="width:150px">
+                            <a
+                              href="/cart/change?id={{ lineItem.id }}&quantity={{ lineItem.quantity | minus: 1 }}"
+                              class="nav-link input-group-text"
+                              >-</a
+                            >
+                            <input
+                              type="number"
+                              class="form-control text-center"
+                              name="update[]"
+                              value="{{ lineItem.quantity }}"
+                              {% if lineItem.variant.inventory_quantity == lineItem.quantity %}
+                                readonly
+                              {% endif %}
+                            >
+                            <a
+                              href="/cart/change?id={{ lineItem.id }}&quantity={{ lineItem.quantity | plus: 1 }}"
+                              class="nav-link input-group-text {% if lineItem.variant.inventory_quantity == lineItem.quantity %} disabled {% endif %}"
+                              >+</a
+                            >
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="final_price_wrapper">
+                          {% if lineItem.original_line_price != lineItem.final_line_price %}
+                            <del>{{ lineItem.original_line_price | money }}</del> <br>
+                            <span class="selling_price">{{ lineItem.final_line_price | money }}</span>
+                          {% else %}
+                            <span class="original_price">{{ lineItem.original_line_price | money }}</span>
+                          {% endif %}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="item_remove">
+                          <a href="{{ lineItem.url_to_remove }}" class="nav-link">
+                            {%- render 'icon-folder', icons: 'delete' -%}
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="checkout-cart">
+              <div class="cart">
+                <div class="cart-body">
+                  <div class="cart-info d-flex justify-content-between">
+                    <strong>Subtotal : </strong>
+                    <strong class="cart-sub-total">{{ cart.total_price | money_with_currency }}</strong>
+                  </div>
+                  <hr class="my-3">
+                  <div class="cart_note mb-4">
+                    <label>Note : </label>
+                    <textarea
+                      class="form-control order-note"
+                      name="note"
+                      placeholder="Special Note"
+                    >{{ cart.note }}</textarea>
+                  </div>
+                  <div class="cart-actions">
+                    <button type="submit" name="update" class="btn btn-primary w-100">
+                      {{ 'cart.general.update' | t }}
+                    </button>
+                    <button type="submit" name="checkout" class="btn btn-secondary w-100 mt-2">
+                      {{ 'cart.general.checkout' | t }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    {% else %}
+      <div class="header d-flex align-items-center justify-content-center">
+        <h3 class="text-dark">Your Cart Empty</h3>
+      </div>
+    {% endunless %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name":"Cart Template",
+  "settings":[]
+}
+{% endschema %}
