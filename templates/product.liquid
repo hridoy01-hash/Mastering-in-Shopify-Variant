@@ -30,6 +30,9 @@
     flex-direction: column;
     gap: 10px;
   }
+  .active_img {
+    border: 2px solid black;
+  }
 </style>
 
 <div class="container">
@@ -37,17 +40,42 @@
     <div class="row product_inner_content">
       <div class=" col-md-6 product_image">
         <div class="display_image_wrapper">
-          <img
-            src="{{ product.featured_image |  img_url: 'master'}}"
-            alt="{{ product.title }}"
-            width="100%"
-            height="auto"
-          >
+          {% if product.selected_or_first_available_variant.featured_image %}
+            {% liquid
+              assign featured = product.selected_or_first_available_variant.featured_image
+            %}
+            <img
+              src="{{ featured |  img_url: 'master'}}"
+              alt="{{ product.title }}"
+              width="100%"
+              height="auto"
+            >
+          {% else %}
+            {% liquid
+              assign featured = product.featured_image
+            %}
+            <img
+              src="{{ featured |  img_url: 'master'}}"
+              alt="{{ product.title }}"
+              width="100%"
+              height="auto"
+            >
+          {% endif %}
+
           <div class="galery_img">
-            <ul style="padding-left: 0px; display:flex; flex-wrap:wrap;list-style:none;gap:15px;padding-top:10px">
+            <ul
+              class="thums_images"
+              style="padding-left: 0px; display:flex; flex-wrap:wrap;list-style:none;gap:15px;padding-top:10px"
+            >
               {% for image in product.images %}
-                <li>
-                  <img src="{{ image |  img_url: 'medium' }}" alt="{{ product.title }}" width="150px" height="200px">
+                <li
+                  class="
+                    {% if featured == image %}
+                      active_img
+                    {% endif %}
+                  "
+                >
+                  <img src="{{ image |  img_url: 'medium' }}" alt="{{ product.title }}" width="201px" height="200px">
                 </li>
               {% endfor %}
             </ul>
@@ -147,4 +175,11 @@
 
       });
   });
+
+  // change thums img
+  document.querySelectorAll('.thums_images li').forEach((thums)=>{
+    thums.addEventListener("click" , function(){
+      console.log("Hello Thums");
+    })
+  })
 </script>
