@@ -2,6 +2,7 @@
   body {
     font-family: 'Poppins';
   }
+
   /* Hide the default radio button */
   .product_variant_wrapper input[type='radio'] {
     display: none;
@@ -20,7 +21,7 @@
   }
 
   /* Style for when the radio button is checked */
-  .product_variant_wrapper input[type='radio']:checked + .custom-radio-button {
+  .product_variant_wrapper input[type='radio']:checked+.custom-radio-button {
     background-color: #121212;
     color: #fff;
   }
@@ -30,7 +31,8 @@
     flex-direction: column;
     gap: 10px;
   }
-  .active_img {
+
+  .active_thumbs_img {
     border: 2px solid black;
   }
 </style>
@@ -41,42 +43,24 @@
       <div class=" col-md-6 product_image">
         <div class="display_image_wrapper">
           {% if product.selected_or_first_available_variant.featured_image %}
-            {% liquid
-              assign featured = product.selected_or_first_available_variant.featured_image
-            %}
-            <img
-              src="{{ featured |  img_url: 'master'}}"
-              alt="{{ product.title }}"
-              width="100%"
-              height="auto"
-            >
+          {% liquid
+          assign featured = product.selected_or_first_available_variant.featured_image
+          %}
+          <img id="product_img" src="{{ featured |  img_url: 'master'}}" alt="{{ product.title }}" width="100%"
+            height="auto">
           {% else %}
-            {% liquid
-              assign featured = product.featured_image
-            %}
-            <img
-              src="{{ featured |  img_url: 'master'}}"
-              alt="{{ product.title }}"
-              width="100%"
-              height="auto"
-            >
+          {% liquid
+          assign featured = product.featured_image
+          %}
+          <img src="{{ featured |  img_url: 'master'}}" alt="{{ product.title }}" width="100%" height="auto">
           {% endif %}
 
           <div class="galery_img">
-            <ul
-              class="thums_images"
-              style="padding-left: 0px; display:flex; flex-wrap:wrap;list-style:none;gap:15px;padding-top:10px"
-            >
+            <ul style="padding-left: 0px; display:flex; flex-wrap:wrap;list-style:none;gap:15px;padding-top:10px">
               {% for image in product.images %}
-                <li
-                  class="
-                    {% if featured == image %}
-                      active_img
-                    {% endif %}
-                  "
-                >
-                  <img src="{{ image |  img_url: 'medium' }}" alt="{{ product.title }}" width="201px" height="200px">
-                </li>
+              <li class="{%  if featured == image %} active_thumbs_img {% endif %}">
+                <img src="{{ image |  img_url: 'medium' }}" alt="{{ product.title }}" width="150px" height="200px">
+              </li>
               {% endfor %}
             </ul>
           </div>
@@ -96,40 +80,28 @@
         <p>{{ product.description }}</p>
 
         {% form 'product', product %}
-          <input
-            id="product_variant_id"
-            type="hidden"
-            name="id"
-            value="{{ product.selected_or_first_available_variant.id }}"
-          >
-          <div class="product_variant_wrapper">
-            <h5>Product Variants</h5>
-            {% for option in product.options_with_values %}
-              <fieldset>
-                <legend>{{ option.name }}</legend>
-                {% for value in option.values %}
-                  <input
-                    {% if option.selected_value == value %}
-                      checked
-                    {% endif %}
-                    type="radio"
-                    id="{{ option.name |  handleize }}-{{ value }}"
-                    name="{{ option.name }}"
-                    value="{{ value }}"
-                    hidden
-                  >
-                  <label for="{{ option.name |  handleize }}-{{ value }}" class="custom-radio-button">
-                    {{- value -}}
-                  </label>
-                {% endfor %}
-              </fieldset>
+        <input id="product_variant_id" type="hidden" name="id"
+          value="{{ product.selected_or_first_available_variant.id }}">
+        <div class="product_variant_wrapper">
+          <h5>Product Variants</h5>
+          {% for option in product.options_with_values %}
+          <fieldset>
+            <legend>{{ option.name }}</legend>
+            {% for value in option.values %}
+            <input {% if option.selected_value == value %} checked {% endif %} type="radio"
+              id="{{ option.name |  handleize }}-{{ value }}" name="{{ option.name }}" value="{{ value }}" hidden>
+            <label for="{{ option.name |  handleize }}-{{ value }}" class="custom-radio-button">
+              {{- value -}}
+            </label>
             {% endfor %}
-          </div>
+          </fieldset>
+          {% endfor %}
+        </div>
 
-          <div class="mt-4">
-            <input class="text-center" type="number" name="quantity" id="quantity" min="1" value="1">
-            <input type="submit" value="Add to cart">
-          </div>
+        <div class="mt-4">
+          <input class="text-center" type="number" name="quantity" id="quantity" min="1" value="1">
+          <input type="submit" value="Add to cart">
+        </div>
         {% endform %}
       </div>
     </div>
@@ -137,49 +109,62 @@
 </div>
 
 <script>
-   const product = {{ product |  json }}
+  const product = {{ product | json }}
   document.querySelectorAll('.product_variant_wrapper input[type="radio"]').forEach((radioButton) => {
-      radioButton.addEventListener("click", function() {
+    radioButton.addEventListener("click", function () {
 
-          // empty array for selected option
-          const selectedOptions = [];
-          document.querySelectorAll('.product_variant_wrapper input[type="radio"]:checked').forEach((radioValue) => {
-              selectedOptions.push(radioValue.value);
-          });
-
-          let matchedVariants = product.variants.find(variant =>{
-            let pass = true;
-            for(let i=0; i< selectedOptions.length;i++){
-              if(selectedOptions.indexOf(variant.options[i]) === -1){
-                pass = false
-                break;
-              }
-            }
-            return pass;
-          });
-
-          console.log("matchedVariants" , matchedVariants);
-
-          // update product variant ID
-        document.getElementById("product_variant_id").value = matchedVariants.id;
-
-        // update variant URL
-        let URL = new URLParse(window.location.href , true);
-        URL.query.variant = matchedVariants.id;
-        window.history.replaceState(null,null,URL);
-
-        // update price
-        document.querySelector(".product_compare_price").textContent = formatMoney(matchedVariants.compare_at_price,"{{ shop.money_format }}");
-        document.querySelector(".product_price").textContent = formatMoney(matchedVariants.price,"{{ shop.money_format }}");
-
-
+      // empty array for selected option
+      const selectedOptions = [];
+      document.querySelectorAll('.product_variant_wrapper input[type="radio"]:checked').forEach((radioValue) => {
+        selectedOptions.push(radioValue.value);
       });
+
+      let matchedVariants = product.variants.find(variant => {
+        let pass = true;
+        for (let i = 0; i < selectedOptions.length; i++) {
+          if (selectedOptions.indexOf(variant.options[i]) === -1) {
+            pass = false
+            break;
+          }
+        }
+        return pass;
+      });
+
+      console.log("matchedVariants", matchedVariants);
+
+      // update product variant ID
+      document.getElementById("product_variant_id").value = matchedVariants.id;
+
+      // update variant URL
+      let URL = new URLParse(window.location.href, true);
+      URL.query.variant = matchedVariants.id;
+      window.history.replaceState(null, null, URL);
+
+      // update price
+      document.querySelector(".product_compare_price").textContent = formatMoney(matchedVariants.compare_at_price, "{{ shop.money_format }}");
+      document.querySelector(".product_price").textContent = formatMoney(matchedVariants.price, "{{ shop.money_format }}");
+
+      // update display img
+
+      if(matchedVariants.featured_image){
+        document.querySelector('#product_img').src = matchedVariants.featured_image.src;
+        document.querySelector('.galery_img li.active_thumbs_img').classList.remove("active_thumbs_img");
+        document.querySelector('.galery_img li')[matchedVariants.featured_image.position - 1].classList.add("active_thumbs_img");
+      }else{
+        console.log("img not found ");
+      }
+
+
+    });
   });
 
-  // change thums img
-  document.querySelectorAll('.thums_images li').forEach((thums)=>{
-    thums.addEventListener("click" , function(){
-      console.log("Hello Thums");
-    })
-  })
+  // update thums image
+  document.querySelectorAll('.galery_img li').forEach((li) => {
+    li.addEventListener("click", function () {
+      document.querySelector('.galery_img li.active_thumbs_img').classList.remove("active_thumbs_img");
+      li.classList.add("active_thumbs_img");
+      console.log(li.children[0].getAttribute("src"));
+      document.querySelector('.display_image_wrapper img').src = li.children[0].getAttribute("src");
+    });
+  });
 </script>
