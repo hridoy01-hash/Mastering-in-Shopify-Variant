@@ -1,39 +1,16 @@
 {
   "sections": {
-    "slide-show": {
-      "type": "slider_show",
-      "blocks": {
-        "e5297794-a809-4456-bdd5-a867edc76d45": {
-          "type": "slide",
-          "settings": {
-            "sliderimg": "shopify:\/\/shop_images\/Clothes-Trends-Web-1.jpg",
-            "title": "Summer Sale",
-            "slider_sub_text": "<p>Some representative placeholder content for the first slide.<\/p>",
-            "button_label": "Shop now",
-            "button_url": ""
-          }
-        }
-      },
-      "block_order": [
-        "e5297794-a809-4456-bdd5-a867edc76d45"
-      ],
-      "settings": {
-        "enable_auto_slide": false,
-        "Show_Previous_icon": true
-      }
-    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
         "collection_title": "Featured Colection",
-        "featured_collection": "outdoor-collection",
+        "featured_collection": "indoor-collection",
         "show_limit_product": 4,
         "textColor": "#000000"
       }
     }
   },
   "order": [
-    "slide-show",
     "featured_collection"
   ]
 }

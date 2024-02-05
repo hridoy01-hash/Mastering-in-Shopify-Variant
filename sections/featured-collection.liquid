@@ -6,23 +6,228 @@
     color: {{ section.settings.textColor }};
   }
 {% endstylesheet %}
-<div class="container">
-  <div class="section_title text-center">
-    <h3 class="pt-20 featured_heading" id="title_text_{{ section.id }}">{{ section.settings.collection_title }}</h3>
-  </div>
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for product in collections.products limit: section.settings.show_limit_product %}
-      {% render 'product-cart', product: product %}
-    {% endfor %}
-  </div>
-  {% if collections.all_products_count.size > 6 %}
-    <div class="text-center view_more_btn_wrapper mt-3">
-      <a href="{{ collections.url }}" class="text-center btn btn-primary"
-        >View More {{ collections.all_products_count -}}
-      </a>
-    </div>
-  {% endif %}
-</div>
+<section class="feature_product__section s0101__universal">
+        <div class="featured_product__section___wrapper">
+            <div class="container">
+                <div class="feature__product__inner__section">
+                    <!-- Section heading -->
+                    <div class="section__heading">
+                        <div class="featured__title__wrapper">
+                            <span class="featured__title">OUR BEST SELLERS</span>
+                        </div>
+                        <div class="featured__sub__title__wrapper">
+                            <span class="featured__sub__title">Designed with integrity</span>
+                        </div>
+                    </div>
+                    <!-- product section -->
+                    <div class="featured__product__wrapper">
+                        <div class="product_card">
+                            {% for product in collections.products limit: 10 %}
+                                <div class="single_product">
+                                <!-- product-top-area -->
+                                <div class="product__top__area">
+                                    <div class="product__top__content__wrapper">
+                                        <div class="sale__badge__wrapper">
+                                            <span  class="sale__badge__text">-15%</span>
+                                        </div>
+                                        <div class="product__quick__btn__wrapper">
+                                            <div class="wishlist__btn__wrapper">
+                                                <span class="wishlist_btn">
+                                                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M8 13.6726C7.78645 13.6726 7.58057 13.5952 7.42013 13.4547C6.81416 12.9248 6.22994 12.4269 5.7145 11.9877L5.71187 11.9854C4.20068 10.6976 2.89571 9.58545 1.98773 8.48991C0.972755 7.26516 0.5 6.10393 0.5 4.83535C0.5 3.60282 0.92263 2.46574 1.68996 1.63341C2.46644 0.791237 3.53188 0.327408 4.69037 0.327408C5.55623 0.327408 6.34919 0.601151 7.04716 1.14097C7.39941 1.41345 7.7187 1.74693 8 2.13592C8.28141 1.74693 8.60059 1.41345 8.95295 1.14097C9.65092 0.601151 10.4439 0.327408 11.3097 0.327408C12.4681 0.327408 13.5337 0.791237 14.3102 1.63341C15.0775 2.46574 15.5 3.60282 15.5 4.83535C15.5 6.10393 15.0274 7.26516 14.0124 8.48979C13.1044 9.58545 11.7996 10.6975 10.2886 11.9852C9.77223 12.4251 9.1871 12.9238 8.57976 13.4549C8.41943 13.5952 8.21343 13.6726 8 13.6726ZM4.69037 1.20609C3.78022 1.20609 2.94411 1.56932 2.33586 2.22896C1.71857 2.89855 1.37856 3.82415 1.37856 4.83535C1.37856 5.90228 1.7751 6.85649 2.66419 7.92926C3.52353 8.96621 4.80172 10.0555 6.28167 11.3167L6.28442 11.319C6.8018 11.7599 7.38831 12.2598 7.99874 12.7936C8.61283 12.2588 9.20026 11.7581 9.71867 11.3165C11.1985 10.0552 12.4766 8.96621 13.3359 7.92926C14.2249 6.85649 14.6214 5.90228 14.6214 4.83535C14.6214 3.82415 14.2814 2.89855 13.6641 2.22896C13.056 1.56932 12.2198 1.20609 11.3097 1.20609C10.643 1.20609 10.0309 1.41803 9.49036 1.83597C9.00868 2.20859 8.67314 2.67963 8.47642 3.00922C8.37525 3.1787 8.19718 3.27987 8 3.27987C7.80282 3.27987 7.62475 3.1787 7.52358 3.00922C7.32697 2.67963 6.99143 2.20859 6.50964 1.83597C5.96913 1.41803 5.35699 1.20609 4.69037 1.20609Z"
+                                                            fill="#222222" stroke="#222222" stroke-width="0.5" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <div class="quick__view__btn__wrapper ">
+                                                <span class="quick__view__btn product_modal_open" product-handle="{{ product.handle }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12"
+                                                        viewBox="0 0 16 12" fill="none">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M8.00016 0.375C12.6877 0.375 14.8395 4.28812 15.3883 5.48812C15.4618 5.64876 15.4999 5.82334 15.4999 6C15.4999 6.17666 15.4618 6.35124 15.3883 6.51188C14.8395 7.71187 12.6877 11.625 8.00016 11.625C3.31266 11.625 1.16079 7.71187 0.612039 6.51312C0.538375 6.35231 0.500244 6.17751 0.500244 6.00063C0.500244 5.82374 0.538375 5.64894 0.612039 5.48812C1.16079 4.28812 3.31266 0.375 8.00016 0.375ZM1.75016 6.00687C2.21891 7.02125 4.05829 10.375 8.00016 10.375C11.9327 10.375 13.7727 7.03562 14.2502 6C13.7727 4.96438 11.9327 1.625 8.00016 1.625C4.05829 1.625 2.21891 4.97875 1.75016 6.00687ZM6.26401 3.40166C6.77791 3.05828 7.3821 2.875 8.00016 2.875C8.82866 2.87599 9.62294 3.20555 10.2088 3.79139C10.7946 4.37722 11.1242 5.1715 11.1252 6C11.1252 6.61807 10.9419 7.22225 10.5985 7.73616C10.2551 8.25006 9.76707 8.6506 9.19605 8.88712C8.62503 9.12365 7.9967 9.18553 7.39051 9.06495C6.78432 8.94438 6.22749 8.64675 5.79045 8.20971C5.35342 7.77267 5.05579 7.21585 4.93521 6.60966C4.81463 6.00347 4.87652 5.37513 5.11304 4.80411C5.34956 4.2331 5.7501 3.74504 6.26401 3.40166ZM6.95847 7.55901C7.26681 7.76503 7.62932 7.875 8.00016 7.875C8.49744 7.875 8.97436 7.67746 9.32599 7.32583C9.67762 6.97419 9.87516 6.49728 9.87516 6C9.87516 5.62916 9.7652 5.26665 9.55917 4.95831C9.35314 4.64996 9.06031 4.40964 8.7177 4.26773C8.37508 4.12581 7.99808 4.08868 7.63437 4.16103C7.27066 4.23337 6.93656 4.41195 6.67434 4.67417C6.41211 4.9364 6.23354 5.27049 6.16119 5.63421C6.08884 5.99792 6.12598 6.37492 6.26789 6.71753C6.4098 7.06014 6.65013 7.35298 6.95847 7.55901Z"
+                                                            fill="white" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product__img__wrapper">
+                                        <div class="feature__img__wrapper" style="height: 180px;">
+                                           
+                                          <img class="single_featured_img" src="{{ product.featured_image |  img_url: 'medium' }}" alt="product-img">
+                                            
+                                            {% if product.images.size > 1 %}
+                                                <img class="second_featured_img" src="{{ product.images[1] |  img_url: 'medium' }}" alt="product-img">
+                                                {%- else -%}
+                                                <img class="second_featured_img" src="{{ product.featured_image |  img_url: 'medium' }}" alt="product-img">
+                                            {% endif %}
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="product__variant__btn__wrapper product_modal_open" product-handle="{{ product.handle }}">
+                                        <button class="product__variant__btn">Choose Option</button>
+                                    </div>
+                                    {% unless product.selected_or_first_available_variant.available %}
+                                        <div class="sold_out_content_wrapper">
+                                            <span class="sold_out_text">Sold out</span>
+                                        </div>
+                                    {% endunless %}
+                                   
+                                </div>
+                                <!-- product-bottom-area -->
+                                <div class="product__botton__content__wrapper">
+                                    <div class="product__name__wrapper">
+                                        <span class="product__name">{{ product.title }}</span>
+                                    </div>
+                                    <div class="product__price__wrapper">
+                                        <div class="discount__price__wrapper">
+                                            <span class="discount__price">{{ product.selected_or_first_available_variant.price |  money }}</span>
+                                        </div>
+                                        <div class="compare__price__wrapper">
+                                            <span class="compare__price line_throw">{{ product.selected_or_first_available_variant.compare_at_price |  money }}</span>
+                                        </div> <br>
+                                        <a href="{{ product.url }}">View </a> 
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                           
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="view__more__wrapper">
+            <button class="view__more__btn">See More</button>
+        </div>
+
+
+        <!-- product popup -->
+        <div class="product_popup_container">
+            <div class="product__popup__main__wrapper">
+                <div class="popup__inner__content__wrappper">
+                    <div class="display_img_comtainer">
+                        <img class="popup_display_img" src="./Image.png" alt="">
+                    </div>
+                    <div class="product__info__wrapper">
+                        <div class="product__name__wrapper">
+                            <span class="popup_product__name">Soppiya Innovation</span>
+                        </div>
+                        <div class="product_price__wrapper">
+                            <div class="price_amount_wrapper">
+                                <div class="discount_price_wrapper">
+                                    <span class="popup_compare__price delete_price">$180.00</span>
+                                </div>
+                                <div class="compare_price_wrapper">
+                                    <span class="popup_discount__price">$150.00</span>
+                                </div>
+                            </div>
+                            <div class="price__saving_wrapper">
+                                <span class="price__saving">-20%</span>
+                            </div>
+                        </div>
+                        <div class="product__description_wrapper">
+                            <span class="product__description">The garments labelled as committed are products that have
+                                been produced using sustainable fibres or processes, reducing their environmental
+                                impact.</span>
+                        </div>
+                        <div class="color__variants_wrapper">
+                            <div class="variant_title_wrapper">
+                                <span class="variant_title">Color: <span class="variant_name">Black</span></span>
+                            </div>
+                            <div class="variant_options_wrapper">
+                                <div class="Color_variant_options">
+                                    <input class="custom_radio" id="black" class="radio-custom" name="radio-group"
+                                        type="radio">
+                                    <input class=" custom_radio custom_radio2" id="black" class="radio-custom"
+                                        name="radio-group" type="radio">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="size__variants__wrapper">
+                            <div class="size_variants_title_wrapper">
+                                <span class="size_variants_title">Size: <span class="size_variant_name">M</span></span>
+                            </div>
+                            <div class="size_variants_option_wrapper">
+                                <!-- Hidden radio button with a label -->
+                                <input type="radio" id="medium" name="size-option" value="medium" hidden>
+                                <!-- Custom button-like radio button with a for attribute -->
+                                <label for="medium" class="custom-radio-button">Medium</label>
+
+                                <!-- Hidden radio button with a label -->
+                                <input type="radio" id="large" name="size-option" value="large" hidden>
+                                <!-- Custom button-like radio button with a for attribute -->
+                                <label for="large" class="custom-radio-button">Large</label>
+                                
+                                <!-- Hidden radio button with a label -->
+                                <input type="radio" id="extra-large" name="size-option" value="extra-large" hidden>
+                                <!-- Custom button-like radio button with a for attribute -->
+                                <label for="extra-large" class="custom-radio-button">Extra Large</label>
+                            </div>
+                        </div>
+                        <div class="qunaty__shop__btn_wrapper">
+                            <div class="quantity_selector_wrapper">
+                                <span class="plus_btn">
+                                    <svg width="10" height="10" viewBox="0 0 4 2" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.96307 0.759943V1.86364H0.09375V0.759943H3.96307Z" fill="#616161" />
+                                    </svg>
+                                </span>
+                                <input class="quantity_input" type="number" name="quantity" id="quantity" min="1"
+                                    value="1">
+                                <span class="minus_btn">
+                                    <svg width="10" height="10" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M2.67188 6.44602V0.684659H3.81818V6.44602H2.67188ZM0.366477 4.13636V2.99006H6.12784V4.13636H0.366477Z"
+                                            fill="#616161" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="shop_btn_wrapper">
+                                <div class="add_to_cart_btn_wrapper">
+                                    <button class="add_to_cart_btn">Add to cart</button>
+                                </div>
+                                <div class="quick_wishlist_btn_wrapper">
+                                    <span class="quick_wishlist_btn"><svg xmlns="http://www.w3.org/2000/svg" width="17"
+                                            height="15" viewBox="0 0 17 15" fill="none">
+                                            <path
+                                                d="M8.5 13.7741C8.28645 13.7741 8.08057 13.6968 7.92013 13.5562C7.31416 13.0264 6.72994 12.5285 6.2145 12.0892L6.21187 12.0869C4.70068 10.7991 3.39571 9.687 2.48773 8.59145C1.47276 7.36671 1 6.20547 1 4.9369C1 3.70437 1.42263 2.56728 2.18996 1.73495C2.96644 0.892784 4.03188 0.428955 5.19037 0.428955C6.05623 0.428955 6.84919 0.702698 7.54716 1.24252C7.89941 1.515 8.2187 1.84848 8.5 2.23746C8.78141 1.84848 9.10059 1.515 9.45295 1.24252C10.1509 0.702698 10.9439 0.428955 11.8097 0.428955C12.9681 0.428955 14.0337 0.892784 14.8102 1.73495C15.5775 2.56728 16 3.70437 16 4.9369C16 6.20547 15.5274 7.36671 14.5124 8.59134C13.6044 9.687 12.2996 10.799 10.7886 12.0867C10.2722 12.5266 9.6871 13.0254 9.07976 13.5565C8.91943 13.6968 8.71343 13.7741 8.5 13.7741ZM5.19037 1.30763C4.28022 1.30763 3.44411 1.67087 2.83586 2.33051C2.21857 3.0001 1.87856 3.9257 1.87856 4.9369C1.87856 6.00383 2.2751 6.95804 3.16419 8.03081C4.02353 9.06776 5.30172 10.157 6.78167 11.4183L6.78442 11.4205C7.3018 11.8615 7.88831 12.3614 8.49874 12.8951C9.11283 12.3603 9.70026 11.8597 10.2187 11.418C11.6985 10.1568 12.9766 9.06776 13.8359 8.03081C14.7249 6.95804 15.1214 6.00383 15.1214 4.9369C15.1214 3.9257 14.7814 3.0001 14.1641 2.33051C13.556 1.67087 12.7198 1.30763 11.8097 1.30763C11.143 1.30763 10.5309 1.51958 9.99036 1.93752C9.50868 2.31013 9.17314 2.78117 8.97642 3.11076C8.87525 3.28025 8.69718 3.38142 8.5 3.38142C8.30282 3.38142 8.12475 3.28025 8.02358 3.11076C7.82697 2.78117 7.49143 2.31013 7.00964 1.93752C6.46913 1.51958 5.85699 1.30763 5.19037 1.30763Z"
+                                                fill="#222222" stroke="#222222" stroke-width="0.5" />
+                                        </svg></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="view_details_btn_wrapper">
+                            <span class="view_details_btn_text">View full details</span>
+                            <span class="view_details_btn_icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10"
+                                    fill="none">
+                                    <path
+                                        d="M9.36116 5.87206H0.770465C0.552167 5.87206 0.369181 5.79822 0.221509 5.65055C0.0738363 5.50288 0 5.31989 0 5.10159C0 4.88329 0.0738363 4.70031 0.221509 4.55263C0.369181 4.40496 0.552167 4.33113 0.770465 4.33113H9.36116L7.16533 2.1353C7.01124 1.98121 6.9374 1.80143 6.94382 1.59597C6.95024 1.39051 7.02408 1.21074 7.16533 1.05665C7.31942 0.902553 7.50241 0.822297 7.71429 0.815876C7.92616 0.809455 8.10915 0.883292 8.26324 1.03738L11.7881 4.56227C11.8652 4.63931 11.9197 4.72278 11.9518 4.81267C11.9839 4.90255 12 4.99886 12 5.10159C12 5.20432 11.9839 5.30063 11.9518 5.39052C11.9197 5.4804 11.8652 5.56387 11.7881 5.64092L8.26324 9.1658C8.10915 9.31989 7.92616 9.39373 7.71429 9.38731C7.50241 9.38089 7.31942 9.30063 7.16533 9.14654C7.02408 8.99244 6.95024 8.81267 6.94382 8.60721C6.9374 8.40175 7.01124 8.22198 7.16533 8.06788L9.36116 5.87206Z"
+                                        fill="#303030" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup_close_btn_wrapper">
+                        <span class="popup_close_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"
+                                fill="none">
+                                <path
+                                    d="M10.7674 1.23264C10.6184 1.08368 10.4163 1 10.2056 1C9.99492 1 9.79286 1.08368 9.64386 1.23264L6 4.87649L2.35615 1.23264C2.20714 1.08368 2.00508 1 1.79439 1C1.5837 1 1.38164 1.08368 1.23264 1.23264C1.08368 1.38164 1 1.5837 1 1.79439C1 2.00508 1.08368 2.20714 1.23264 2.35615L4.87649 6L1.23264 9.64386C1.08368 9.79286 1 9.99492 1 10.2056C1 10.4163 1.08368 10.6184 1.23264 10.7674C1.38164 10.9163 1.5837 11 1.79439 11C2.00508 11 2.20714 10.9163 2.35615 10.7674L6 7.12351L9.64386 10.7674C9.79286 10.9163 9.99492 11 10.2056 11C10.4163 11 10.6184 10.9163 10.7674 10.7674C10.9163 10.6184 11 10.4163 11 10.2056C11 9.99492 10.9163 9.79286 10.7674 9.64386L7.12351 6L10.7674 2.35615C10.9163 2.20714 11 2.00508 11 1.79439C11 1.5837 10.9163 1.38164 10.7674 1.23264Z"
+                                    fill="#616161" stroke="#616161" stroke-width="0.5" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
 
 {% schema %}
 {

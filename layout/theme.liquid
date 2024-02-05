@@ -18,7 +18,10 @@
       {{ 'theme.css' | asset_url | stylesheet_tag }}
       {{ 'footer.css' | asset_url | stylesheet_tag }}
     {% endcomment %}
+    {{ 'updated_featured_collection.css' | asset_url | stylesheet_tag }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
    <script src="{{ 'money.js' |  asset_url }}" defer="defer"></script>
+   <script src="{{ 'updated_featured_collection.js' |  asset_url }}" defer="defer"></script>
   </head>
   <body>
     <div class="main_body">
