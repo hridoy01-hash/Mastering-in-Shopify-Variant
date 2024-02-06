@@ -1,5 +1,6 @@
 {% liquid
   assign collections = section.settings.featured_collection
+  
 %}
 {% stylesheet %}
   #title_text_{{ section.id }}{
@@ -23,12 +24,23 @@
                     <div class="featured__product__wrapper">
                         <div class="product_card">
                             {% for product in collections.products limit: 10 %}
+                                
                                 <div class="single_product">
                                 <!-- product-top-area -->
                                 <div class="product__top__area">
                                     <div class="product__top__content__wrapper">
                                         <div class="sale__badge__wrapper">
-                                            <span  class="sale__badge__text">-15%</span>
+                                            {% assign originalPrice = product.selected_or_first_available_variant.compare_at_price %}
+                                            {% assign discountedPrice = product.selected_or_first_available_variant.price %}
+
+                                            {% if originalPrice > discountedPrice %}
+                                            {% assign discountAmount = originalPrice | minus: discountedPrice %}
+                                            {% assign discountPercentage = discountAmount | times: 100 | divided_by: originalPrice %}
+                                            <p class="sale__badge__text">-{{ discountPercentage | round: 2 }}%</p>
+                                            {% else %}
+                                            <p class="sale__badge__text">No discount available</p>
+                                            {% endif %}
+
                                         </div>
                                         <div class="product__quick__btn__wrapper">
                                             <div class="wishlist__btn__wrapper">
@@ -42,7 +54,7 @@
                                                 </span>
                                             </div>
                                             <div class="quick__view__btn__wrapper ">
-                                                <span class="quick__view__btn product_modal_open" product-handle="{{ product.handle }}">
+                                                <span class="quick__view__btn product_modal_open" product-handle="{{ product.handle }}" shop-currency="{{ shop.money_format }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12"
                                                         viewBox="0 0 16 12" fill="none">
                                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -66,7 +78,7 @@
                                            
                                         </div>
                                     </div>
-                                    <div class="product__variant__btn__wrapper product_modal_open" product-handle="{{ product.handle }}">
+                                    <div class="product__variant__btn__wrapper product_modal_open" product-handle="{{ product.handle }}" shop-currency="{{ shop.money_format }}">
                                         <button class="product__variant__btn">Choose Option</button>
                                     </div>
                                     {% unless product.selected_or_first_available_variant.available %}
@@ -119,20 +131,18 @@
                         <div class="product_price__wrapper">
                             <div class="price_amount_wrapper">
                                 <div class="discount_price_wrapper">
-                                    <span class="popup_compare__price delete_price">$180.00</span>
+                                    <span class="popup_compare__price delete_price"></span>
                                 </div>
                                 <div class="compare_price_wrapper">
-                                    <span class="popup_discount__price">$150.00</span>
+                                    <span class="popup_discount__price"></span>
                                 </div>
                             </div>
                             <div class="price__saving_wrapper">
-                                <span class="price__saving">-20%</span>
+                                <span class="price__saving"></span>
                             </div>
                         </div>
                         <div class="product__description_wrapper">
-                            <span class="product__description">The garments labelled as committed are products that have
-                                been produced using sustainable fibres or processes, reducing their environmental
-                                impact.</span>
+                            <span class="product__description"></span>
                         </div>
                         <div class="color__variants_wrapper">
                             <div class="variant_title_wrapper">
@@ -157,15 +167,6 @@
                                 <!-- Custom button-like radio button with a for attribute -->
                                 <label for="medium" class="custom-radio-button">Medium</label>
 
-                                <!-- Hidden radio button with a label -->
-                                <input type="radio" id="large" name="size-option" value="large" hidden>
-                                <!-- Custom button-like radio button with a for attribute -->
-                                <label for="large" class="custom-radio-button">Large</label>
-                                
-                                <!-- Hidden radio button with a label -->
-                                <input type="radio" id="extra-large" name="size-option" value="extra-large" hidden>
-                                <!-- Custom button-like radio button with a for attribute -->
-                                <label for="extra-large" class="custom-radio-button">Extra Large</label>
                             </div>
                         </div>
                         <div class="qunaty__shop__btn_wrapper">

@@ -416,3 +416,8 @@ img.footer_img {
   background-color: black;
   color: #eee;
 } */
+.navbar {
+  padding-top: unset;
+  padding-bottom: unset;
+  padding: 20px 0px;
+}

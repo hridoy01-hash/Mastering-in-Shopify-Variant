@@ -94,27 +94,29 @@
             value="{{ product.selected_or_first_available_variant.id }}"
           >
           <div class="product_variant_wrapper">
-            <h5>Product Variants</h5>
-            {% for option in product.options_with_values %}
-              <fieldset>
-                <legend>{{ option.name }}</legend>
-                {% for value in option.values %}
-                  <input
-                    {% if option.selected_value == value %}
-                      checked
-                    {% endif %}
-                    type="radio"
-                    id="{{ option.name |  handleize }}-{{ value }}"
-                    name="{{ option.name }}"
-                    value="{{ value }}"
-                    hidden
-                  >
-                  <label for="{{ option.name |  handleize }}-{{ value }}" class="custom-radio-button">
-                    {{- value -}}
-                  </label>
-                {% endfor %}
-              </fieldset>
-            {% endfor %}
+            {%- unless product.has_only_default_variant -%}
+              <h5>Product Variants</h5>
+              {% for option in product.options_with_values %}
+                <fieldset>
+                  <legend>{{ option.name }}</legend>
+                  {% for value in option.values %}
+                    <input
+                      {% if option.selected_value == value %}
+                        checked
+                      {% endif %}
+                      type="radio"
+                      id="{{ option.name |  handleize }}-{{ value }}"
+                      name="{{ option.name }}"
+                      value="{{ value }}"
+                      hidden
+                    >
+                    <label for="{{ option.name |  handleize }}-{{ value }}" class="custom-radio-button">
+                      {{- value -}}
+                    </label>
+                  {% endfor %}
+                </fieldset>
+              {% endfor %}
+            {%- endunless -%}
 
             {% if product.selected_or_first_available_variant.inventory_quantity < 0 %}
               <span class="inventory_quantity" style="font-size: 14px;">Out of stock</span>

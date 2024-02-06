@@ -58,7 +58,7 @@
           {% endfor %}
         </ul>
         {% if activeSearchbar %}
-          <form class="d-flex" action="{{ routes.search_url }}">
+          <form style="height: 50px;" class="d-flex" action="{{ routes.search_url }}">
             <input
               class="form-control me-2"
               type="text"
@@ -67,7 +67,7 @@
               aria-label="Search"
               value="{{ search.terms | escape }}"
             >
-            <button class="btn btn-outline-success" type="submit">Find Product</button>
+            <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         {% endif %}
         <div class="cart-counter mx-3">
