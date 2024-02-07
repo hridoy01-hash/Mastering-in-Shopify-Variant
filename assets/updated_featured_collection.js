@@ -47,18 +47,6 @@ document.querySelectorAll(".product_modal_open").forEach((seeVariant) => {
                     document.querySelector('.price__saving').textContent = `-${discountFloor}%`;
                 }
 
-              
-
-
-
-
-
-
-
-
-
-
-
             } catch (error) {
                 console.log("Error", error);
             }
@@ -68,11 +56,14 @@ document.querySelectorAll(".product_modal_open").forEach((seeVariant) => {
 });
 
 
-document.querySelector(".popup_close_btn_wrapper").addEventListener("click", function () {
-    document.querySelector(".product_popup_container").style.display = `none`;
-    document.querySelector(".popup_display_img").src = ``;
-    document.querySelector(".popup_product__name").textContent = ``;
-    document.querySelector(".popup_compare__price ").textContent = ``;
-    document.querySelector(".popup_discount__price ").textContent = ``;
-    document.querySelector(".product__description ").textContent = ``;
-});
+if (document.querySelector(".product_popup_container")) {
+    document.querySelector(".popup_close_btn_wrapper").addEventListener("click", function () {
+        document.querySelector(".product_popup_container").style.display = `none`;
+        document.querySelector(".popup_display_img").src = ``;
+        document.querySelector(".popup_product__name").textContent = ``;
+        document.querySelector(".popup_compare__price ").textContent = ``;
+        document.querySelector(".popup_discount__price ").textContent = ``;
+        document.querySelector(".product__description ").textContent = ``;
+    });
+}
+

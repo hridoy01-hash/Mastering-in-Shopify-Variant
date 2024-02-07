@@ -5,7 +5,7 @@
             "settings": {}
         },
         "related-product":{
-            "type": "related-product",
+            "type": "recommended-product",
             "settings": {}
         }
     },

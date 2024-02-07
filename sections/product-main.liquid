@@ -171,6 +171,7 @@
 
 <script>
   const product = {{ product | json }}
+ 
   document.querySelectorAll('.product_variant_wrapper input[type="radio"]').forEach((radioButton) => {
     radioButton.addEventListener("click", function () {
 
@@ -273,8 +274,8 @@
     let newVariantID = newUrlParams.get("variant");
 
   
-    if (newVariantID !== oldVariantID) {
-    oldVariantID = newVariantID;
+  if (newVariantID !== oldVariantID) {
+  oldVariantID = newVariantID;
 
   let inventory_quantity = document.querySelectorAll(".inventory_quantity");
 

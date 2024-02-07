@@ -1,0 +1,68 @@
+<style>
+  .related_products {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+</style>
+<div class="container mt-5 mb-5">
+  <div class="related">
+    <div class="width">
+      <h2>Related Products</h2>
+      <div class="related_products"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const url = window.location.href;
+  const URLSplit = url.split('/');
+  const productHandle = URLSplit[URLSplit.length - 1];
+  getProduct(productHandle);
+  async function getProduct(productHandle) {
+    try {
+      const response = await fetch(`/products/${productHandle}.js`);
+      const product = await response.json();
+      const relatedID = product.id;
+      relatedProductId(relatedID)
+    } catch (error) {
+      console.log('Error', error);
+    }
+  }
+
+  function buildBlock(product) {
+    const html = `
+        <a class="related_product" href="${product.url}">
+        <img src="${product.images[0]}" />
+        <h3 style="font-size:20px">${product.title}</h3>
+        <span>${product.price}</span>
+        </a
+        `;
+    return html;
+  }
+  function relatedProductId(relatedID) {
+    fetch(window.Shopify.routes.root + `recommendations/products.json?product_id=${relatedID}&limit=5`)
+      .then((response) => response.json())
+      .then(({ products }) => {
+        products.forEach((product) => {
+          const html = buildBlock(product);
+          document.querySelector('.related_products').innerHTML += html;
+        });
+      });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Reated Product",
+  "settings": [],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Related Product",
+      "blocks": [],
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}
